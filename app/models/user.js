@@ -11,10 +11,10 @@ const UserSchema = new Schema({
   hashed_password: { type: String, default: '' },
   email: { type: String, default: '' },
   salt: { type: String, default: '' },
-  groupName: { type: String, default: '' }
+  groupName: { type: String, default: '' },
 });
 
-const JoiUserSchema = Joi.object().key({
+const JoiUserSchema = Joi.object().keys({
   userName: Joi.string(),
   password: Joi.string(),
   email: Joi.string().email(),

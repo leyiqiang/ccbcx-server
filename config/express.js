@@ -7,6 +7,7 @@
 const express = require('express');
 const compression = require('compression');
 const morgan = require('morgan');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');

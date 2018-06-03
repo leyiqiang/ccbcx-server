@@ -26,7 +26,7 @@ fs.readdirSync(models)
 
 // Bootstrap routes
 require('./config/express')(app, passport);
-// require('./app/controllers')(app);
+require('./app/controllers')(app);
 function listen() {
   if (app.get('env') === 'test') return;
   app.listen(port);
