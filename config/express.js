@@ -8,17 +8,19 @@ const express = require('express');
 const compression = require('compression');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const cors = require('cors');
 
 const winston = require('winston');
 const config = require('./');
-// const pkg = require('../package.json');
+const pkg = require('../package.json');
 
 const env = process.env.NODE_ENV || 'development';
 
 
 
-module.exports = function (app) {
+module.exports = function (app, passport) {
 
     // Compression middleware (should be placed before express.static)
     app.use(compression({
@@ -51,7 +53,21 @@ module.exports = function (app) {
     app.use(bodyParser.json({limit: '10mb'}));
     app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
-    if (env === 'development') {
+    // CookieParser should be above session
+    app.use(cookieParser());
+    app.use(cookieSession({ secret: 'secret' }));
+    app.use(session({
+      resave: false,
+        saveUninitialized: true,
+        secret: pkg.name,
+    }));
+
+    // use passport session
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+
+  if (env === 'development') {
         app.locals.pretty = true;
     }
 };
