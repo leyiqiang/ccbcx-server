@@ -2,11 +2,6 @@ const _ = require('lodash');
 
 const requiredEnvList = [
   'SESSION_SECRET',
-  'GITEE_ACCESS_TOKEN',
-  'GITEE_USERNAME',
-  'GITEE_REPOSITORY_NAME',
-  'EMAIL_USER',
-  'EMAIL_PASSWORD',
   'MONGO_DB_URI',
 ];
 
