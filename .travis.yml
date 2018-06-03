@@ -17,3 +17,10 @@ jobs:
     - stage: lint
       script:
         - npm run lint
+    - stage: deploy to production
+      script: skip
+      deploy:
+        <<: *heroku
+        app ccbcx-server
+    - stage test production
+      script: 'curl https://ccbcx-server.herokuapp.com'

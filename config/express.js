@@ -12,13 +12,13 @@ const cors = require('cors');
 
 const winston = require('winston');
 const config = require('./');
-const pkg = require('../package.json');
+// const pkg = require('../package.json');
 
 const env = process.env.NODE_ENV || 'development';
 
 
 
-module.exports = function (app, passport) {
+module.exports = function (app) {
 
     // Compression middleware (should be placed before express.static)
     app.use(compression({
