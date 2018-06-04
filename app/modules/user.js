@@ -17,7 +17,6 @@ async function decodeToken(token) {
       if (err) {
         reject(err);
       }
-
       resolve(decoded);
     });
   });
@@ -54,8 +53,14 @@ async function getUserByUserName({ userName }) {
   return User.findOne({ userName })
 }
 
+async function createUser({ userName, nickName, password }) {
+  const newUser = new User({userName, nickName, password})
+  return newUser.save()
+}
+
 module.exports = {
   decodeToken,
+  createUser,
   verifyUser,
   generateJwtTokenForUser,
   getUserByUserName,

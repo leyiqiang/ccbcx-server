@@ -7,11 +7,11 @@ const router = express.Router();
 
 router.get('/info', async function (req, res) {
   const { userName } = req.decodedToken;
-
   try {
-    const user = await userModule.getUser({ userName });
+    const user = await userModule.getUserByUserName({ userName });
     return res.status(200).send(user);
   } catch (error) {
+    console.log(error)
     return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
   }
 });
@@ -23,6 +23,7 @@ router.get('/:userName', async function (req, res) {
     const user = await userModule.getUser({ userName });
     return res.status(200).send(user);
   } catch (error) {
+    console.log(error)
     return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
   }
 
