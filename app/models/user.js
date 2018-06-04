@@ -105,7 +105,7 @@ UserSchema.statics = {
     delete user['hashed_password'];
     delete user['salt'];
     return user;
-  }
+  },
 };
 
 

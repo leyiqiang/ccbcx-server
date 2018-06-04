@@ -1,10 +1,10 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const { userSchemaString } = require('../models/user');
 
-// const { userSchemaString } = require('../models/user');
-// const User = mongoose.model(userSchemaString);
+const User = mongoose.model(userSchemaString);
 
 /**
  * private helper method for verifying token
@@ -23,11 +23,11 @@ async function decodeToken(token) {
   });
 }
 
-// function generateJwtTokenForUser({ userName }) {
-//   return jwt.sign({ userName }, config.secret, {
-//     expiresIn: 60 * 60 * 24 * 7, // expires in a week
-//   });
-// }
+function generateJwtTokenForUser({ userName }) {
+  return jwt.sign({ userName }, config.secret, {
+    expiresIn: 60 * 60 * 24 * 7, // expires in a week
+  });
+}
 
 async function verifyUser({ userName }, token) {
   try {
@@ -48,4 +48,15 @@ async function verifyUser({ userName }, token) {
       message: error,
     }
   }
+}
+
+async function getUserByUserName({ userName }) {
+  return User.findOne({ userName })
+}
+
+module.exports = {
+  decodeToken,
+  verifyUser,
+  generateJwtTokenForUser,
+  getUserByUserName,
 }

@@ -5,27 +5,24 @@ const userModule = require('../modules/user');
 
 const router = express.Router();
 
-router.get('/info', async function (req, res) {
-  const { userName } = req.decodedToken;
-
+router.post('/signIn', async function (req, res) {
   try {
-    const user = await userModule.getUser({ userName });
-    return res.status(200).send(user);
-  } catch (error) {
-    return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    const { userName, password } = req.body.userName;
+    const user = await userModule.getUserByUserName({ userName })
+    if (!user) {
+      return res.status(404).send('User does not exist.')
+    }
+    const isValidPassword = user.authenticate(password)
+    if (!isValidPassword) {
+      return res.status(401).send({ auth: false, token: null })
+    }
+    const token = userModule.generateJwtTokenForUser({
+      userName: user.userName,
+    })
+    res.status(200).send({ auth:true, token: token })
+  } catch (err) {
+    return res.sendStatus(500)
   }
-});
-
-router.get('/:userName', async function (req, res) {
-  const { userName } = req.params;
-
-  try {
-    const user = await userModule.getUser({ userName });
-    return res.status(200).send(user);
-  } catch (error) {
-    return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-  }
-
 });
 
 module.exports = router;

@@ -9,12 +9,16 @@ module.exports = function (app) {
     res.send('Hello World');
   });
 
+  // Public routes
+  const auth = require('./auth');
+  apiRouter.use('/auth', auth)
+
   // Private routes
   const authorization = require('../middlewares/auth');
   apiRouter.use(authorization.requiresLogin);
 
-  const auth = require('./auth');
-  apiRouter.use('/auth', auth)
+  const session = require('./session');
+  apiRouter.use('/session', session)
 
   // apiRouter.use(authErrorHandler)
 };
