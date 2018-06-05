@@ -18,14 +18,11 @@ async function findGroupByGroupName({ groupName }) {
   return Group.findOne({ groupName })
 }
 
+async function findGroupByInvitationCode({ invitationCode }) {
+  return Group.findOne({ invitationCode })
+}
+
 async function createGroup({ groupName, groupContact, invitationCode }) {
-  // TODO
-  const group = await Group.findOne({
-    invitationCode,
-  })
-  if (!_.isNil(group)) {
-    throw new Error('请重试')
-  }
   const newGroup = new Group({ groupName, groupContact, invitationCode})
   return newGroup.save()
 }
@@ -33,6 +30,7 @@ async function createGroup({ groupName, groupContact, invitationCode }) {
 
 module.exports = {
   joiGroupSchema,
+  findGroupByInvitationCode,
   findGroupByGroupName,
   createGroup,
 }

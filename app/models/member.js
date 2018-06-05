@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const memberSchemaString = 'Member';
+const _ = require('lodash')
 const { userSchemaString } = require('./user');
 const { groupSchemaString } = require('./group');
 
@@ -24,6 +25,8 @@ MemberSchema.virtual('user', {
   justOne: true,
 });
 
+MemberSchema.set('toObject', { virtuals: true });
+MemberSchema.set('toJson', { virtuals: true });
 
 MemberSchema.statics = {
   definedPopulate(query) {
@@ -32,38 +35,36 @@ MemberSchema.statics = {
       .populate('group');
   },
 
-  getUserInfo: async function({ userName }) {
-    const query = this.findOne({
-      userName,
-    })
-    return await this.definedPopulate(query)
+  populateUser(query) {
+    return query
+    .populate('user')
   },
 
-  getGroupInfo: async function({ groupName }) {
-    const query = this.findOne({
-      groupName,
-    })
-    return await this.definedPopulate(query)
+  populateGroup(query) {
+    return query
+    .populate('group')
   },
 
-  createLeader: async function({ groupName, userName }) {
-    const query = this.create({ groupName, userName, isLeader: true})
-    return await this.definedPopulate(query)
-  },
-
-  createMember: async function({ groupName, userName }) {
-    const query = this.findOneAndUpdate({
-      groupName,
-      userName,
-    }, {
-      groupName,
-      userName,
-    }, {
-      new: true,
-      upsert: true,
-    })
-    return await this.definedPopulate(query)
-  },
+  // getUserInfo: async function({ userName }) {
+  //   const query = await this.findOne({
+  //     userName,
+  //   })
+  //   return await this.populateUser(query)
+  // },
+  //
+  // createMember: async function({ groupName, userName }) {
+  //   const query = this.findOneAndUpdate({
+  //     groupName,
+  //     userName,
+  //   }, {
+  //     groupName,
+  //     userName,
+  //   }, {
+  //     new: true,
+  //     upsert: true,
+  //   })
+  //   return await this.definedPopulate(query)
+  // },
 };
 
 mongoose.model(memberSchemaString, MemberSchema);

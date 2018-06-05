@@ -24,7 +24,6 @@ router.post('/signIn', async function (req, res) {
     })
     res.status(200).send({ auth:true, token: token })
   } catch (err) {
-    console.log(err)
     return res.sendStatus(500)
   }
 });

@@ -20,8 +20,8 @@ module.exports = function (app) {
   const session = require('./session')
   apiRouter.use('/session', session)
 
-  const user = require('./user')
-  apiRouter.use('/user', user)
+  const group = require('./group')
+  apiRouter.use('/group', group)
 
   // apiRouter.use(authErrorHandler)
 }
