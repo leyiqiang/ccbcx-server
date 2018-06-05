@@ -1,24 +1,27 @@
-'use strict';
+'use strict'
 module.exports = function (app) {
-  const express = require('express');
+  const express = require('express')
 
-  const apiRouter = express.Router();
-  app.use('/api', apiRouter);
+  const apiRouter = express.Router()
+  app.use('/api', apiRouter)
 
   apiRouter.get('/hello', async function(req, res) {
-    res.send('Hello World');
-  });
+    res.send('Hello World')
+  })
 
   // Public routes
-  const auth = require('./auth');
+  const auth = require('./auth')
   apiRouter.use('/auth', auth)
 
   // Private routes
-  const authorization = require('../middlewares/auth');
-  apiRouter.use(authorization.requiresLogin);
+  const authorization = require('../middlewares/auth')
+  apiRouter.use(authorization.requiresLogin)
 
-  const session = require('./session');
+  const session = require('./session')
   apiRouter.use('/session', session)
 
+  const user = require('./user')
+  apiRouter.use('/user', user)
+
   // apiRouter.use(authErrorHandler)
-};
+}

@@ -1,24 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const userSchemaString = 'User';
-const Joi = require('joi');
+// const Joi = require('joi');
 const crypto = require('crypto');
 // const _ = require('lodash')
-const { groupSchemaString } = require('./group');
+// const { groupSchemaString } = require('./group');
 
 const UserSchema = new Schema({
   userName: { type: String, default: '' },
   nickName: { type: String, default: '' },
   hashed_password: { type: String, default: '' },
   salt: { type: String, default: '' },
-  groupName: { type: String, default: '' },
-});
-
-const JoiUserSchema = Joi.object().keys({
-  userName: Joi.string().alphanum().min(3).max(30).required(),
-  nickName: Joi.string().min(3).max(30).required(),
-  password: Joi.string().required(),
-  groupName: Joi.string().optional(),
 });
 
 UserSchema
@@ -29,30 +21,12 @@ UserSchema
     this.hashed_password = this.encryptPassword(password);
 });
 
-UserSchema.virtual('group', {
-  ref: groupSchemaString,
-  localField: 'groupName',
-  foreignField: 'name',
-  justOne: true,
-});
-
-// Validations
-
-// UserSchema.path('userName').validate(async function (userName) {
-//   const user = await this.findOne({
-//     userName: userName,
-//   });
-//   console.log(_.isNil(user))
-//   return !_.isNil(user)
-// }, 'Username already taken');
-
-// UserSchema.path('hashed_password').validate(function (hashed_password) {
-//   return hashed_password.length && this._passport.length;
-// }, 'Password cannot be blank');
-
-// UserSchema.path('email').validate(function (email) {
-//   return email.length;
-// }, 'Email cannot be blank');
+// UserSchema.virtual('group', {
+//   ref: groupSchemaString,
+//   localField: 'groupName',
+//   foreignField: 'name',
+//   justOne: true,
+// });
 
 // Methods
 UserSchema.methods = {
@@ -97,9 +71,9 @@ UserSchema.methods = {
 };
 
 UserSchema.statics = {
-  definedPopulate(query) {
-    return query.populate('group');
-  },
+  // definedPopulate(query) {
+  //   return query.populate('group');
+  // },
 
   getUserBasicInfo: async function ({userName}) {
     let user = await this.findOne({
@@ -117,5 +91,4 @@ mongoose.model(userSchemaString, UserSchema);
 
 module.exports = {
   userSchemaString,
-  JoiUserSchema,
 };

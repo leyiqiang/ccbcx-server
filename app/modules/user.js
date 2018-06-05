@@ -3,8 +3,16 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const mongoose = require('mongoose');
 const { userSchemaString } = require('../models/user');
+const Joi = require('joi');
 
 const User = mongoose.model(userSchemaString);
+
+const joiUserSchema = Joi.object().keys({
+  userName: Joi.string().alphanum().min(3).max(30).required(),
+  nickName: Joi.string().min(3).max(30).required(),
+  password: Joi.string().required(),
+  groupName: Joi.string().optional(),
+});
 
 /**
  * private helper method for verifying token
@@ -49,8 +57,12 @@ async function verifyUser({ userName }, token) {
   }
 }
 
-async function getUserByUserName({ userName }) {
+async function getUser({ userName }) {
   return User.findOne({ userName })
+}
+
+async function getUserByUserName({ userName }) {
+  return User.getUserBasicInfo({ userName })
 }
 
 async function createUser({ userName, nickName, password }) {
@@ -59,8 +71,10 @@ async function createUser({ userName, nickName, password }) {
 }
 
 module.exports = {
+  joiUserSchema,
   decodeToken,
   createUser,
+  getUser,
   verifyUser,
   generateJwtTokenForUser,
   getUserByUserName,
