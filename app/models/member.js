@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const memberSchemaString = 'Member';
-const _ = require('lodash')
+// const _ = require('lodash')
 const { userSchemaString } = require('./user');
 const { groupSchemaString } = require('./group');
 

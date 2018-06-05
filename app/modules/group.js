@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const { groupSchemaString } = require('../models/group');
 const Joi = require('joi');
-const _ = require('lodash')
+// const _ = require('lodash')
 
 const Group = mongoose.model(groupSchemaString);
 
