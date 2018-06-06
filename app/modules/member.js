@@ -22,7 +22,7 @@ async function getMemberGroupInfo({ userName }){
   let group = member.group
   group = group.toObject()
   if (!member.isLeader) {
-    delete group['invitation_code']
+    delete group['invitationCode']
   }
   return group;
 }
@@ -47,10 +47,20 @@ async function createMember({ groupName, userName }) {
   return newMember.save()
 }
 
+async function deleteMember({ userName }) {
+  return Member.findOneAndDelete({ userName })
+}
+
+async function deleteAllMembersByGroupName({ groupName }) {
+  return Member.deleteMany({ groupName })
+}
+
 module.exports = {
   createLeader,
   createMember,
+  deleteMember,
   findMemberByUsername,
+  deleteAllMembersByGroupName,
   getGroupMemberList,
   getMemberGroupInfo,
 }

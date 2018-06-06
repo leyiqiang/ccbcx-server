@@ -6,7 +6,7 @@ const { userSchemaString } = require('./user');
 const { groupSchemaString } = require('./group');
 
 const MemberSchema = new Schema({
-  groupName: { type: String, required: true },
+  groupName: { type: String, required: true, unique: false },
   userName: { type: String, required: true },
   isLeader: { type: Boolean, required: true, default: false },
 });

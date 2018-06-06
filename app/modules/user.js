@@ -9,7 +9,7 @@ const User = mongoose.model(userSchemaString);
 
 const joiUserSchema = Joi.object().keys({
   userName: Joi.string().alphanum().min(3).max(30).required(),
-  nickName: Joi.string().min(3).max(30).required(),
+  nickName: Joi.string().min(1).max(30).required(),
   password: Joi.string().required(),
   groupName: Joi.string().optional(),
 });

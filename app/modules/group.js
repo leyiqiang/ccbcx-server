@@ -8,7 +8,7 @@ const Joi = require('joi');
 const Group = mongoose.model(groupSchemaString);
 
 const joiGroupSchema = Joi.object().keys({
-  groupName: Joi.string().alphanum().min(1).max(30).required(),
+  groupName: Joi.string().min(1).max(30).required(),
   groupContact: Joi.string().min(1).max(30).required(),
   invitationCode: Joi.string().required(),
 });
@@ -27,9 +27,13 @@ async function createGroup({ groupName, groupContact, invitationCode }) {
   return newGroup.save()
 }
 
+async function deleteGroup({ groupName }) {
+  return Group.findOneAndDelete({ groupName })
+}
 
 module.exports = {
   joiGroupSchema,
+  deleteGroup,
   findGroupByInvitationCode,
   findGroupByGroupName,
   createGroup,
