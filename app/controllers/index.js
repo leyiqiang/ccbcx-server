@@ -1,12 +1,14 @@
 'use strict'
+
 module.exports = function (app) {
   const express = require('express')
+  const { authErrorHandler } = require('../middlewares/errorHandler')
 
   const apiRouter = express.Router()
   app.use('/api', apiRouter)
 
-  apiRouter.get('/hello', async function(req, res) {
-    res.send('Hello World')
+  apiRouter.get('/pikachu', async function(req, res) {
+    res.send('感谢你对密码吧的支持! --皮卡')
   })
 
   // Public routes
@@ -14,14 +16,14 @@ module.exports = function (app) {
   apiRouter.use('/auth', auth)
 
   // Private routes
-  const authorization = require('../middlewares/auth')
-  apiRouter.use(authorization.requiresLogin)
-
   const session = require('./session')
   apiRouter.use('/session', session)
 
   const group = require('./group')
   apiRouter.use('/group', group)
+
+  const admin_session = require('./admin/session')
+  apiRouter.use('/admin/session', admin_session)
 
   // apiRouter.use(authErrorHandler)
 }

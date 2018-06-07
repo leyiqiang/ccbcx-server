@@ -23,6 +23,8 @@ const {
   deleteAllMembersByGroupName,
 } = require('../modules/member')
 
+const authorization = require('../middlewares/auth')
+router.use(authorization.requiresLogin)
 
 router.get('/info', async function(req, res) {
   const { userName } = req.decodedToken
