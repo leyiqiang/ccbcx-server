@@ -25,5 +25,5 @@ module.exports = function (app) {
   const admin_session = require('./admin/session')
   apiRouter.use('/admin/session', admin_session)
 
-  // apiRouter.use(authErrorHandler)
+  apiRouter.use(authErrorHandler)
 }
