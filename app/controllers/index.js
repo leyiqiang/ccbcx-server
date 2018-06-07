@@ -25,5 +25,8 @@ module.exports = function (app) {
   const admin_session = require('./admin/session')
   apiRouter.use('/admin/session', admin_session)
 
+  const admin_group = require('./admin/group')
+  apiRouter.use('/admin/group', admin_group)
+
   apiRouter.use(authErrorHandler)
 }

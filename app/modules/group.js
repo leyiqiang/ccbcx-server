@@ -31,10 +31,16 @@ async function deleteGroup({ groupName }) {
   return Group.findOneAndDelete({ groupName })
 }
 
+
+async function getAllGroups() {
+  return Group.find({})
+}
+
 module.exports = {
   joiGroupSchema,
   deleteGroup,
   findGroupByInvitationCode,
   findGroupByGroupName,
   createGroup,
+  getAllGroups,
 }

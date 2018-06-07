@@ -28,7 +28,7 @@ module.exports = function (app, passport) {
         threshold: 512,
     }));
 
-    // Configure corse
+    // Configure cors
     app.use(cors());
 
     // Static files middleware
