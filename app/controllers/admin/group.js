@@ -7,8 +7,11 @@ const router = express.Router();
 const {
   getAllGroups,
   findGroupByGroupName,
-  getGroupMemberList,
 } = require('../../modules/group')
+
+const {
+  getGroupMemberList,
+} = require('../../modules/member')
 
 const authorization = require('../../middlewares/auth')
 router.use(authorization.checkAdminJwt)
@@ -33,6 +36,7 @@ router.get('/info/:groupName', async function(req, res) {
     }
     return res.status(200).send({groupInfo: group, memberList: memberList})
   } catch (err) {
+    console.log(err)
     return res.status(500).send({message: err.message})
   }
 })
