@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const userModule = require('../../modules/user');
+// const userModule = require('../../modules/user');
 const _ = require('lodash')
 const router = express.Router();
 const {
