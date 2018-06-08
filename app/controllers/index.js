@@ -28,5 +28,8 @@ module.exports = function (app) {
   const admin_group = require('./admin/group')
   apiRouter.use('/admin/group', admin_group)
 
+  const admin_question_group = require('./admin/questionGroup')
+  apiRouter.use('/admin/question', admin_question_group)
+
   apiRouter.use(authErrorHandler)
 }

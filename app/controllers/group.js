@@ -151,7 +151,6 @@ router.delete('/delete/:groupName', async function(req, res) {
     try {
       await deleteGroup({ groupName })
     } catch(err) {
-      console.log(err)
       return res.status(500).send({message: err.message})
     }
     await deleteAllMembersByGroupName({groupName})

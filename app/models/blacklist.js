@@ -5,7 +5,7 @@ const blackListSchemaString = 'BlackList';
 
 const BlackListSchema = new Schema({
   groupName: { type: String, required: true, unique: true },
-  // TODO blockedUtil
+  blockedUntil: { type: Date, required: true },
 });
 
 mongoose.model(blackListSchemaString, BlackListSchema);

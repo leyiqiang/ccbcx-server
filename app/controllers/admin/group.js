@@ -36,7 +36,6 @@ router.get('/info/:groupName', async function(req, res) {
     }
     return res.status(200).send({groupInfo: group, memberList: memberList})
   } catch (err) {
-    console.log(err)
     return res.status(500).send({message: err.message})
   }
 })
