@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const questionGroupSchemaString = 'QuestionGroup';
 
-const GROUP_ONE = 'GROUP_ONE'
-const GROUP_TWO = 'GROUP_TWO'
-const GROUP_THREE = 'GROUP_THREE'
-const GROUP_META = 'GROUP_META'
+const GROUP_ONE = 1
+const GROUP_TWO = 2
+const GROUP_THREE = 3
+const GROUP_META = 4
 
 const QuestionGroup = new Schema({
   groupType: {
-    type: String,
+    type: Number,
     enum:[GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META],
     unique: true,
   },
@@ -33,6 +33,10 @@ const QuestionGroup = new Schema({
 mongoose.model(questionGroupSchemaString, QuestionGroup);
 
 module.exports = {
+  GROUP_ONE,
+  GROUP_TWO,
+  GROUP_THREE,
+  GROUP_META,
   questionGroupSchemaString,
   QuestionGroup,
 };
