@@ -15,7 +15,7 @@ const {
 const authorization = require('../../middlewares/auth')
 router.use(authorization.checkAdminJwt)
 
-router.get('/groupList', async function (req, res) {
+router.get('/list', async function (req, res) {
   try {
     const questionGroupList = await getQuestionGroupList()
     const sortedList = _.sortBy(questionGroupList, ['groupType'])

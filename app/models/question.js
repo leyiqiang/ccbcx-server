@@ -5,8 +5,8 @@ const questionSchemaString = 'Question';
 const { GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META } = require('../models/questionGroup')
 
 const QuestionSchema = new Schema({
-  // questionNumber should be in x-y, or M-z format
-  // x = 1~3, y = 1~10, z = 1~10
+  // questionNumber should be in x-y format
+  // x = 1~10, y = 1~10/m
   questionNumber: { type: String, required: true, unique: true },
   groupType: { type: Number, enum:[GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META] },
   questionContent: { type: String, required: true }, // TODO Rich text with support of pictures
