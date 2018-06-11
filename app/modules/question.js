@@ -18,7 +18,12 @@ async function getAllQuestions() {
   return Question.find({})
 }
 
+async function getQuestion({questionNumber}) {
+  return Question.findOne({questionNumber})
+}
+
 module.exports = {
   // joiGroupSchema,
+  getQuestion,
   getAllQuestions,
 }
