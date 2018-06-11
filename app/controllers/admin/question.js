@@ -15,8 +15,7 @@ router.use(authorization.checkAdminJwt)
 router.get('/list',async function(req, res) {
   try {
     const questionList = await getAllQuestions()
-    const sortedList = _.sortBy(questionList, ['questionNumber'])
-    return res.status(200).send(sortedList)
+    return res.status(200).send(questionList)
   } catch (err) {
     return res.status(500).send({message: err.message})
   }
