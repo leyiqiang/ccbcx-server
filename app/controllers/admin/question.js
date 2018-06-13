@@ -13,7 +13,13 @@ const {
   joiQuestionSchema,
 } = require('../../modules/question')
 
+const config = require('../../../config')
+
 const authorization = require('../../middlewares/auth')
+const AWS = require('aws-sdk')
+AWS.config.update({})
+
+
 router.use(authorization.checkAdminJwt)
 
 router.get('/list',async function(req, res) {

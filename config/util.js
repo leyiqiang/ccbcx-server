@@ -3,6 +3,8 @@ const _ = require('lodash');
 const requiredEnvList = [
   'SESSION_SECRET',
   'MONGO_DB_URI',
+  'AWS_ACCESS_KEY',
+  'AWS_SECRET_KEY',
 ];
 
 function checkRequiredEnv() {

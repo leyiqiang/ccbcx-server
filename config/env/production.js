@@ -7,4 +7,6 @@
 module.exports = {
   secret: process.env.SESSION_SECRET,
   mongodb: process.env.MONGO_DB_URI,
+  aws_access: process.env.AWS_ACCESS_KEY,
+  aws_secret: process.env.AWS_SECRET_KEY,
 };
