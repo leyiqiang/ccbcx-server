@@ -9,7 +9,6 @@ const QuestionSchema = new Schema({
   // x = 1~10, y = 1~10/m
   questionNumber: { type: String, required: true, unique: true },
   groupType: { type: Number, enum:[GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META] },
-  questionContent: { type: String },
   answer: { type: String, required: true },
   isMeta: { type: Boolean, required: true },
 });

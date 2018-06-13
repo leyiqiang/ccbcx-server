@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/leyiqiang/ccbcx-server#readme",
   "dependencies": {
+    "aws-sdk": "^2.256.1",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",

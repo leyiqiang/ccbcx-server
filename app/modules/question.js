@@ -10,7 +10,6 @@ const Question = mongoose.model(questionSchemaString);
 const joiQuestionSchema = Joi.object().keys({
   questionNumber: Joi.string().min(1).max(3).required(),
   answer: Joi.string().min(1).max(30).required(),
-  questionContent: Joi.string(),
 });
 
 
