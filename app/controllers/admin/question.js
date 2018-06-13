@@ -3,6 +3,7 @@
 const express = require('express');
 const _ = require('lodash')
 const Joi = require('joi');
+var sanitizeHtml = require('sanitize-html');
 const { sendJoiValidationError } = require('../../utils/joi');
 const router = express.Router();
 const {
@@ -49,10 +50,19 @@ router.post('/update', async function(req, res) {
     return sendJoiValidationError(joiError, res)
   }
 
+  const sanitizedContent = sanitizeHtml(
+      newQuestionFormBody.questionContent, {
+        allowedTags: false,
+        allowedAttributes: false,
+        allowedSchemesByTag: {
+          img: [ 'data' ],
+        },
+      })
+
   try{
     const question = await updateQuestion({
       questionNumber: newQuestionFormBody.questionNumber,
-      questionContent: newQuestionFormBody.questionContent,
+      questionContent: sanitizedContent,
       answer: newQuestionFormBody.answer,
     })
     res.status(200).send(question)
