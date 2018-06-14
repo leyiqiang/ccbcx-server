@@ -99,7 +99,6 @@ router.post('/update', async function(req, res) {
     })
     res.status(200).send(question)
   } catch (err) {
-    console.log(err)
     return res.status(500).send({message: err.message})
   }
 })

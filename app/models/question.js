@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const questionSchemaString = 'Question';
-// const { userSchemaString } = require('./user');
+const { questionGroupSchemaString } = require('./questionGroup');
 const { GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META } = require('../models/questionGroup')
 
 const QuestionSchema = new Schema({
@@ -13,18 +13,18 @@ const QuestionSchema = new Schema({
   isMeta: { type: Boolean, required: true },
 });
 
-// GroupSchema.virtual('user', {
-//   ref: userSchemaString,
-//   localField: 'groupName',
-//   foreignField: 'groupName',
-//   justOne: true,
-// });
-//
-// GroupSchema.statics = {
-//   definedPopulate(query) {
-//     return query.populate('user');
-//   },
-// };
+QuestionSchema.virtual('questionGroup', {
+  ref: questionGroupSchemaString,
+  localField: 'groupType',
+  foreignField: 'groupType',
+  justOne: true,
+});
+
+QuestionSchema.statics = {
+  definedPopulate(query) {
+    return query.populate('questionGroup');
+  },
+};
 
 mongoose.model(questionSchemaString, QuestionSchema);
 

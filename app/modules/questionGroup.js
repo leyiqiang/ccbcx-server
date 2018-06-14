@@ -16,6 +16,17 @@ async function getQuestionGroupList() {
   return QuestionGroup.find({})
 }
 
+async function getQuestionGroupByDate() {
+  const now = new Date()
+  return QuestionGroup.find({
+    releaseTime: {$lt: now},
+  })
+}
+
+async function getQuestionGroup({ groupType }) {
+  return QuestionGroup.findOne({ groupType })
+}
+
 async function updateQuestionGroup({ groupType, groupName, releaseTime }) {
   return QuestionGroup.findOneAndUpdate({
     groupType,
@@ -27,6 +38,8 @@ async function updateQuestionGroup({ groupType, groupName, releaseTime }) {
 
 module.exports = {
   updateQuestionGroup,
+  getQuestionGroupByDate,
   joiQuestionGroupSchema,
   getQuestionGroupList,
+  getQuestionGroup,
 }

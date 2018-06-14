@@ -19,6 +19,12 @@ module.exports = function (app) {
   const session = require('./session')
   apiRouter.use('/session', session)
 
+  const question_group = require('./questionGroup')
+  apiRouter.use('/questionGroup', question_group)
+
+  const question = require('./question')
+  apiRouter.use('/question', question)
+
   const group = require('./group')
   apiRouter.use('/group', group)
 

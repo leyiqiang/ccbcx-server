@@ -17,6 +17,12 @@ async function getAllQuestions() {
   return Question.find({})
 }
 
+async function getQuestionsByGroupTypes({ groupTypes }) {
+  return Question.find({
+    $or: (groupTypes),
+  })
+}
+
 async function getQuestion({questionNumber}) {
   return Question.findOne({questionNumber})
 }
@@ -32,6 +38,7 @@ async function updateQuestion({questionNumber, questionContent, answer}) {
 
 module.exports = {
   joiQuestionSchema,
+  getQuestionsByGroupTypes,
   updateQuestion,
   getQuestion,
   getAllQuestions,
