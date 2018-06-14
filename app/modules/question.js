@@ -24,14 +24,16 @@ async function getQuestionsByGroupTypes({ groupTypes }) {
   const questionListWithoutAnswer = _.map(questionList, (q) => {
     q = q.toObject()
     delete q['answer']
-    console.log(q)
     return q
   })
-  // console.log(questionListWithoutAnswer)
   return questionListWithoutAnswer
 }
 
 async function getQuestion({questionNumber}) {
+  return Question.findOne({questionNumber})
+}
+
+async function getQuestionWithoutAnswer({questionNumber}) {
   return Question.findOne({questionNumber})
 }
 
@@ -50,4 +52,5 @@ module.exports = {
   updateQuestion,
   getQuestion,
   getAllQuestions,
+  getQuestionWithoutAnswer,
 }

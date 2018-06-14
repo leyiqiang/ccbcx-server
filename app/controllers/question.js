@@ -5,7 +5,7 @@ const _ = require('lodash')
 const router = express.Router();
 const {
   getQuestionsByGroupTypes,
-  getQuestion,
+  getQuestionWithoutAnswer,
 } = require('../modules/question')
 const { findMemberByUsername } = require('../modules/member')
 const { getQuestionGroupByDate } = require('../modules/questionGroup')
@@ -61,8 +61,9 @@ router.get('/:questionNumber', async function(req, res) {
       }
     }
 
-    let question = await getQuestion({ questionNumber })
+    let question = await getQuestionWithoutAnswer({ questionNumber })
     question = question.toObject()
+    delete question['answer']
     question.questionContent = questionContent
     return res.status(200).send(question)
   } catch(err) {
