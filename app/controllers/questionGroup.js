@@ -26,9 +26,10 @@ router.get('/list', async function (req, res) {
     }
     const questionGroupList = await getQuestionGroupByDate()
     const sortedList = _.sortBy(questionGroupList, ['groupType'])
-    if(_.last(sortedList) < 3) {
+    const lastGroupType = _.last(sortedList).groupType
+    if(lastGroupType < 3) {
       const nextQuestionGroup = await getQuestionGroup({
-        groupType: sortedList.length+1,
+        groupType: lastGroupType + 1,
       })
       return res.status(200).send({
         questionGroupList: sortedList,
