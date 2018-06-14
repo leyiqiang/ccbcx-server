@@ -22,10 +22,12 @@ async function getQuestionsByGroupTypes({ groupTypes }) {
     $or: (groupTypes),
   })
   const questionListWithoutAnswer = _.map(questionList, (q) => {
-    const questionWithoutAnswer = q.toObject()
-    delete q.answer
-    return questionWithoutAnswer
+    q = q.toObject()
+    delete q['answer']
+    console.log(q)
+    return q
   })
+  // console.log(questionListWithoutAnswer)
   return questionListWithoutAnswer
 }
 
