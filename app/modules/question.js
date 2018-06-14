@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const { questionSchemaString } = require('../models/question');
 const Joi = require('joi');
-// const _ = require('lodash')
+const _ = require('lodash')
 
 const Question = mongoose.model(questionSchemaString);
 
@@ -18,9 +18,15 @@ async function getAllQuestions() {
 }
 
 async function getQuestionsByGroupTypes({ groupTypes }) {
-  return Question.find({
+  const questionList =  await Question.find({
     $or: (groupTypes),
   })
+  const questionListWithoutAnswer = _.map(questionList, (q) => {
+    const questionWithoutAnswer = q.toObject()
+    delete q.answer
+    return questionWithoutAnswer
+  })
+  return questionListWithoutAnswer
 }
 
 async function getQuestion({questionNumber}) {
