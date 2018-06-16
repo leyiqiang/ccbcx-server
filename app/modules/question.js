@@ -10,6 +10,9 @@ const Question = mongoose.model(questionSchemaString);
 const joiQuestionSchema = Joi.object().keys({
   questionNumber: Joi.string().min(1).max(3).required(),
   answer: Joi.string().min(1).max(30).required(),
+  hint1: Joi.string().allow('').optional(),
+  hint2: Joi.string().allow('').optional(),
+  hint3: Joi.string().allow('').optional(),
 });
 
 
@@ -37,12 +40,15 @@ async function getQuestionWithoutAnswer({questionNumber}) {
   return Question.findOne({questionNumber})
 }
 
-async function updateQuestion({questionNumber, questionContent, answer}) {
+async function updateQuestion({questionNumber, questionContent, answer, hint1, hint2, hint3}) {
   return Question.findOneAndUpdate({
     questionNumber,
   }, {
     questionContent,
     answer,
+    hint1,
+    hint2,
+    hint3,
   })
 }
 

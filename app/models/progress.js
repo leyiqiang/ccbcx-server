@@ -5,8 +5,10 @@ const progressSchemaString = 'Progress';
 
 const ProgressSchema = new Schema({
   groupName: { type: String, required: true },
+  questionNumber: {type: String, required: true},
   answerHistory: { type: Array, required: false },
   completeTime: { type: Date, required: false },
+  score: { type: Number, required: false},
 });
 
 // GroupSchema.virtual('user', {

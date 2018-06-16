@@ -63,7 +63,7 @@ router.get('/:questionNumber', async function(req, res) {
 })
 
 router.post('/update', async function(req, res) {
-  const fieldList = ['questionNumber', 'answer']
+  const fieldList = ['questionNumber', 'answer', 'hint1', 'hint2', 'hint3']
   const newQuestionFormBody = _.pick(req.body, fieldList)
 
   const joiResult = Joi.validate(newQuestionFormBody, joiQuestionSchema, {
@@ -96,6 +96,9 @@ router.post('/update', async function(req, res) {
     const question = await updateQuestion({
       questionNumber: newQuestionFormBody.questionNumber,
       answer: newQuestionFormBody.answer,
+      hint1: newQuestionFormBody.hint1,
+      hint2: newQuestionFormBody.hint2,
+      hint3: newQuestionFormBody.hint3,
     })
     res.status(200).send(question)
   } catch (err) {
