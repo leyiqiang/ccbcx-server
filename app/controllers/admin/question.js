@@ -61,6 +61,11 @@ router.get('/:questionNumber', async function(req, res) {
     return res.status(500).send({message: err.message})
   }
 })
+router.post('/updateLocation', async function(req, res) {
+  const {questionNumber, location} = req.body
+  return res.sendStatus(200)
+
+})
 
 router.post('/update', async function(req, res) {
   const fieldList = ['questionNumber', 'answer', 'hint1', 'hint2', 'hint3']
