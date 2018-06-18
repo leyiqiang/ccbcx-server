@@ -8,6 +8,7 @@ const QuestionSchema = new Schema({
   // questionNumber should be in x-y format
   // x = 1~10, y = 1~10/m
   questionNumber: { type: String, required: true, unique: true },
+  location: { type: String, required: false },
   groupType: { type: Number, enum:[GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META] },
   answer: { type: String, required: true },
   hint1: { type: String, required: false },

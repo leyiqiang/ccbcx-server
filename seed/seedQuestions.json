@@ -1,7 +1,7 @@
 [
-  {questionNumber: '1', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: '2', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: '3', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: '1', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: '', location:'1-6'},
+  {questionNumber: '2', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: '', location:'7-7'},
+  {questionNumber: '3', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: '', location:'3-5'},
   {questionNumber: '4', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
   {questionNumber: '5', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
   {questionNumber: '6', groupType: 1, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
