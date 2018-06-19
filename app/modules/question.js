@@ -40,6 +40,18 @@ async function getQuestionWithoutAnswer({questionNumber}) {
   return Question.findOne({questionNumber})
 }
 
+async function getQuestionByLocation({location}) {
+  return Question.findOne({location})
+}
+
+async function updateQuestionLocation({questionNumber, location}) {
+  return Question.findOneAndUpdate({
+    questionNumber,
+  }, {
+    location,
+  })
+}
+
 async function updateQuestion({questionNumber, questionContent, answer, hint1, hint2, hint3}) {
   return Question.findOneAndUpdate({
     questionNumber,
@@ -59,4 +71,6 @@ module.exports = {
   getQuestion,
   getAllQuestions,
   getQuestionWithoutAnswer,
+  getQuestionByLocation,
+  updateQuestionLocation,
 }

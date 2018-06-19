@@ -11,6 +11,8 @@ const {
   getQuestion,
   updateQuestion,
   joiQuestionSchema,
+  getQuestionByLocation,
+  updateQuestionLocation,
 } = require('../../modules/question')
 
 const config = require('../../../config')
@@ -63,8 +65,16 @@ router.get('/:questionNumber', async function(req, res) {
 })
 router.post('/updateLocation', async function(req, res) {
   const {questionNumber, location} = req.body
-  return res.sendStatus(200)
-
+  try {
+    const question = await getQuestionByLocation({ location })
+    if (!_.isNil(question)) {
+      return res.status(400).send({message: 'invalid location'})
+    }
+    await updateQuestionLocation({ questionNumber, location})
+    return res.status(200).send({message: 'success'})
+  } catch(err) {
+    return res.status(500).send({message: err.message})
+  }
 })
 
 router.post('/update', async function(req, res) {
