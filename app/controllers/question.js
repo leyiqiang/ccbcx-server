@@ -2,13 +2,17 @@
 
 const express = require('express');
 const _ = require('lodash')
+const Joi = require('joi');
 const router = express.Router();
 const {
   getQuestionsByGroupTypes,
   getQuestionWithoutAnswer,
+  getQuestion,
 } = require('../modules/question')
 const { findMemberByUsername } = require('../modules/member')
 const { getQuestionGroupByDate } = require('../modules/questionGroup')
+const {getProgress, updateProgress, joiProgressSchema} = require('../modules/progress')
+const { sendJoiValidationError } = require('../utils/joi');
 
 const config = require('../../config')
 const AWS = require('aws-sdk')
@@ -47,8 +51,65 @@ router.get('/list',async function(req, res) {
 });
 
 router.post('/answer', async function(req, res) {
+  const { userName } = req.decodedToken
+  const fieldList = ['questionNumber', 'answer']
+  const newProgressFormBody = _.pick(req.body, fieldList)
+
+  // validate user input
+  const joiResult = Joi.validate(newProgressFormBody, joiProgressSchema, {
+    presence: 'required',
+    abortEarly: false,
+  })
+  const joiError = joiResult.error
+  if (!_.isNil(joiError)) {
+    return sendJoiValidationError(joiError, res)
+  }
+  const { questionNumber, answer } = newProgressFormBody
+
   try {
-    return res.sendStatus(200)
+    const member = await findMemberByUsername({
+      userName,
+    })
+    if (_.isNil(member)) {
+      return res.status(400).send({message: '需要队伍'})
+    }
+    const progress = await getProgress({
+      groupName: member.groupName,
+      questionNumber,
+    })
+
+    // check progress
+    if(!_.isNil(progress)) {
+      console.log(progress)
+      if (_.includes(progress.answerHistory, answer)) {
+        return res.status(400).send({message: 'you already answered that'})
+      }
+      if (!_.isNil(progress.completeTime)) {
+        return res.status(400).
+            send({message: 'you already completed the question'})
+      }
+    }
+
+    // verify answer
+    const question = await getQuestion({ questionNumber })
+    if(question.answer === answer) {
+      await updateProgress({
+        groupName: member.groupName,
+        questionNumber,
+        answer,
+        completeTime: new Date(),
+      })
+      return res.status(200).send({message: 'correct answer'})
+    } else {
+      await updateProgress({
+        groupName: member.groupName,
+        questionNumber,
+        answer,
+        completeTime: null,
+      })
+      // todo blacklist
+      return res.status(200).send({message: 'wrong answer'})
+    }
   } catch(err) {
     return res.status(500).send({message: err.message})
   }
@@ -77,6 +138,26 @@ router.get('/:questionNumber', async function(req, res) {
     delete question['answer']
     question.questionContent = questionContent
     return res.status(200).send(question)
+  } catch(err) {
+    return res.status(500).send({message: err.message})
+  }
+})
+
+router.get('/progress/:questionNumber', async function(req, res) {
+  try {
+    const { userName } = req.decodedToken
+    const { questionNumber } = req.params
+    const member = await findMemberByUsername({
+      userName,
+    })
+    if (_.isNil(member)) {
+      return res.status(400).send({message: '需要队伍'})
+    }
+    const progress = await getProgress({
+      groupName: member.groupName,
+      questionNumber,
+    })
+    return res.status(200).send(progress)
   } catch(err) {
     return res.status(500).send({message: err.message})
   }

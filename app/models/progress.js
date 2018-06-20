@@ -7,7 +7,7 @@ const { questionSchemaString } = require('./question');
 const ProgressSchema = new Schema({
   groupName: { type: String, required: true },
   questionNumber: {type: String, required: true},
-  answerHistory: { type: Array, required: false },
+  answerHistory: [{ type: String, required: false }],
   completeTime: { type: Date, required: false },
   score: { type: Number, required: false},
 }, {
