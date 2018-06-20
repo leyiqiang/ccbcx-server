@@ -22,7 +22,10 @@ async function getAllQuestions() {
 
 async function getQuestionsByGroupTypes({ groupTypes }) {
   const questionList =  await Question.find({
-    $or: (groupTypes),
+    $and: [
+      {$or: (groupTypes)},
+      {isMeta: false},
+    ],
   })
   const questionListWithoutAnswer = _.map(questionList, (q) => {
     q = q.toObject()

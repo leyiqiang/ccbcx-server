@@ -36,12 +36,23 @@ router.get('/list',async function(req, res) {
     const groupTypes = _.map(questionGroupList, (g) => {
       return {groupType: g.groupType}
     })
+    if (groupTypes.length === 0) {
+      return res.status(200).send([])
+    }
     const questionList = await getQuestionsByGroupTypes({ groupTypes })
     return res.status(200).send(questionList)
   } catch (err) {
     return res.status(500).send({message: err.message})
   }
 });
+
+router.post('/answer', async function(req, res) {
+  try {
+    return res.sendStatus(200)
+  } catch(err) {
+    return res.status(500).send({message: err.message})
+  }
+})
 
 
 router.get('/:questionNumber', async function(req, res) {

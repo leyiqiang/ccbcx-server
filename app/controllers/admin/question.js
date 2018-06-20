@@ -68,7 +68,7 @@ router.post('/updateLocation', async function(req, res) {
   try {
     const question = await getQuestionByLocation({ location })
     if (!_.isNil(question)) {
-      return res.status(400).send({message: 'invalid location'})
+      return res.status(400).send({message: '该位置不可用'})
     }
     await updateQuestionLocation({ questionNumber, location})
     return res.status(200).send({message: 'success'})
