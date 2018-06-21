@@ -3,13 +3,14 @@
 const express = require('express');
 const _ = require('lodash')
 const Joi = require('joi');
+const moment = require('moment')
 const router = express.Router();
 const {
   getQuestionsByGroupTypes,
   getQuestionWithoutAnswer,
   getQuestion,
 } = require('../modules/question')
-const { findMemberByUsername } = require('../modules/member')
+const { addBlackList } = require('../modules/blacklist')
 const { getQuestionGroupByDate } = require('../modules/questionGroup')
 const {getProgress, updateProgress, joiProgressSchema} = require('../modules/progress')
 const { sendJoiValidationError } = require('../utils/joi');
@@ -23,19 +24,14 @@ AWS.config.update({
 const BUCKET_NAME = 'ccbcx-fake'
 const s3 = new AWS.S3()
 
+const { requiresTeam } = require('../middlewares/question')
+const { checkBlackList } = require('../middlewares/blacklist')
 
 const authorization = require('../middlewares/auth')
 router.use(authorization.requiresLogin)
 
-router.get('/list',async function(req, res) {
-  const { userName } = req.decodedToken
+router.get('/list', requiresTeam, async function(req, res) {
   try {
-    const member = await findMemberByUsername({
-      userName,
-    })
-    if (_.isNil(member)) {
-      return res.status(400).send({message: '你需要队伍才能查看题目相关信息'})
-    }
     const questionGroupList = await getQuestionGroupByDate()
     const groupTypes = _.map(questionGroupList, (g) => {
       return {groupType: g.groupType}
@@ -50,8 +46,8 @@ router.get('/list',async function(req, res) {
   }
 });
 
-router.post('/answer', async function(req, res) {
-  const { userName } = req.decodedToken
+router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
+  const member = req.member
   const fieldList = ['questionNumber', 'answer']
   const newProgressFormBody = _.pick(req.body, fieldList)
 
@@ -67,12 +63,6 @@ router.post('/answer', async function(req, res) {
   const { questionNumber, answer } = newProgressFormBody
 
   try {
-    const member = await findMemberByUsername({
-      userName,
-    })
-    if (_.isNil(member)) {
-      return res.status(400).send({message: '需要队伍'})
-    }
     const progress = await getProgress({
       groupName: member.groupName,
       questionNumber,
@@ -107,7 +97,12 @@ router.post('/answer', async function(req, res) {
         answer,
         completeTime: null,
       })
-      // todo blacklist
+      // add to black list, block to 1 minute
+      const blockedUntil = moment().add(60, 'seconds').toDate()
+      await addBlackList({
+        groupName: member.groupName,
+        blockedUntil,
+      })
       return res.status(200).send({message: 'wrong answer'})
     }
   } catch(err) {
@@ -143,16 +138,10 @@ router.get('/:questionNumber', async function(req, res) {
   }
 })
 
-router.get('/progress/:questionNumber', async function(req, res) {
+router.get('/progress/:questionNumber', requiresTeam, async function(req, res) {
   try {
-    const { userName } = req.decodedToken
     const { questionNumber } = req.params
-    const member = await findMemberByUsername({
-      userName,
-    })
-    if (_.isNil(member)) {
-      return res.status(400).send({message: '需要队伍'})
-    }
+    const member = req.member
     const progress = await getProgress({
       groupName: member.groupName,
       questionNumber,

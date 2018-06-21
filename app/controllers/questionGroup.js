@@ -8,22 +8,13 @@ const {
   getQuestionGroupByDate,
   getQuestionGroup,
 } = require('../modules/questionGroup')
-const {
-  findMemberByUsername,
-} = require('../modules/member')
+const {requiresTeam} = require('../middlewares/question')
+
 const authorization = require('../middlewares/auth')
 router.use(authorization.requiresLogin)
 
-router.get('/list', async function (req, res) {
-
-  const { userName } = req.decodedToken
+router.get('/list', requiresTeam, async function (req, res) {
   try {
-    const member = await findMemberByUsername({
-      userName,
-    })
-    if (_.isNil(member)) {
-      return res.status(400).send({message: '你需要队伍才能查看题目相关信息'})
-    }
     const questionGroupList = await getQuestionGroupByDate()
     const sortedList = _.sortBy(questionGroupList, ['groupType'])
     let lastGroupType
