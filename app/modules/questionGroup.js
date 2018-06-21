@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const { questionGroupSchemaString } = require('../models/questionGroup');
 const Joi = require('joi');
 // const _ = require('lodash')
-const { GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META } = require('../models/questionGroup')
+const { GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_SMALLMETA, GROUP_META, GROUP_METAMETA } = require('../models/questionGroup')
 const QuestionGroup = mongoose.model(questionGroupSchemaString);
 
 const joiQuestionGroupSchema = Joi.object().keys({
-  groupType: Joi.number().valid(GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_META),
+  groupType: Joi.number().valid(GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_SMALLMETA, GROUP_META, GROUP_METAMETA),
   groupName: Joi.string().min(1).max(10).required(),
   releaseTime: Joi.date(),
 });

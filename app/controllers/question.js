@@ -7,13 +7,13 @@ const moment = require('moment')
 const router = express.Router();
 const {
   getQuestionsByGroupTypes,
-  getQuestionWithoutAnswer,
   getQuestion,
 } = require('../modules/question')
 const { addBlackList } = require('../modules/blacklist')
 const { getQuestionGroupByDate } = require('../modules/questionGroup')
 const {getProgress, updateProgress, joiProgressSchema} = require('../modules/progress')
 const { sendJoiValidationError } = require('../utils/joi');
+const { calculateScore, filterHint } = require('../utils/question')
 
 const config = require('../../config')
 const AWS = require('aws-sdk')
@@ -70,7 +70,6 @@ router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
 
     // check progress
     if(!_.isNil(progress)) {
-      console.log(progress)
       if (_.includes(progress.answerHistory, answer)) {
         return res.status(400).send({message: 'you already answered that'})
       }
@@ -83,10 +82,13 @@ router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
     // verify answer
     const question = await getQuestion({ questionNumber })
     if(question.answer === answer) {
+      const { groupType, releaseTime } = question.questionGroup
+      const score = await calculateScore({ groupType, releaseTime, questionNumber })
       await updateProgress({
         groupName: member.groupName,
         questionNumber,
         answer,
+        score,
         completeTime: new Date(),
       })
       return res.status(200).send({message: 'correct answer'})
@@ -110,7 +112,6 @@ router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
   }
 })
 
-
 router.get('/:questionNumber', async function(req, res) {
   try {
     const { questionNumber } = req.params
@@ -127,11 +128,11 @@ router.get('/:questionNumber', async function(req, res) {
         questionContent = ''
       }
     }
-
-    let question = await getQuestionWithoutAnswer({ questionNumber })
+    let question = await getQuestion({ questionNumber })
     question = question.toObject()
     delete question['answer']
     question.questionContent = questionContent
+    question = filterHint({question})
     return res.status(200).send(question)
   } catch(err) {
     return res.status(500).send({message: err.message})

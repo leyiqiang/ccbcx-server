@@ -36,11 +36,8 @@ async function getQuestionsByGroupTypes({ groupTypes }) {
 }
 
 async function getQuestion({questionNumber}) {
-  return Question.findOne({questionNumber})
-}
-
-async function getQuestionWithoutAnswer({questionNumber}) {
-  return Question.findOne({questionNumber})
+  const query = Question.findOne({questionNumber})
+  return  await Question.populateGroup(query)
 }
 
 async function getQuestionByLocation({location}) {
@@ -73,7 +70,6 @@ module.exports = {
   updateQuestion,
   getQuestion,
   getAllQuestions,
-  getQuestionWithoutAnswer,
   getQuestionByLocation,
   updateQuestionLocation,
 }

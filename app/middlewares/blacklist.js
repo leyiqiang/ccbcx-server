@@ -19,7 +19,7 @@ const checkBlackList = async function(req, res, next) {
       } else {
         const diff = moment.duration(moment(blockedUntil).diff(moment()))
         const seconds = parseInt(diff.asSeconds())
-        return res.status(400).send({message: 'Release from blacklist in ' + seconds + 'seconds'})
+        return res.status(400).send({message: 'Release from blacklist in ' + seconds + ' seconds'})
       }
     }
     return next()

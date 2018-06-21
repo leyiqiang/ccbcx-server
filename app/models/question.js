@@ -24,8 +24,11 @@ QuestionSchema.virtual('questionGroup', {
   justOne: true,
 });
 
+QuestionSchema.set('toObject', { virtuals: true });
+QuestionSchema.set('toJson', { virtuals: true });
+
 QuestionSchema.statics = {
-  definedPopulate(query) {
+  populateGroup(query) {
     return query.populate('questionGroup');
   },
 };
