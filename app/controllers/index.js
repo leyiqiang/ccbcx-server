@@ -19,6 +19,9 @@ module.exports = function (app) {
   const session = require('./session')
   apiRouter.use('/session', session)
 
+  const password = require('./password')
+  apiRouter.use('/password', password)
+
   const question_group = require('./questionGroup')
   apiRouter.use('/questionGroup', question_group)
 

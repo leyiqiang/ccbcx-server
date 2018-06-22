@@ -14,6 +14,11 @@ const joiUserSchema = Joi.object().keys({
   groupName: Joi.string().optional(),
 });
 
+const joiUserPasswordSchema = Joi.object().keys({
+  userName: Joi.string().alphanum().min(3).max(30).required(),
+  password: Joi.string().required(),
+});
+
 /**
  * private helper method for verifying token
  * @param token
@@ -70,12 +75,26 @@ async function createUser({ userName, nickName, password }) {
   return newUser.save()
 }
 
+async function updatePassword({userName, password}) {
+  const user = await User.findOne({
+    userName,
+  })
+  const hashed_password = await user.encryptPassword(password)
+  return User.findOneAndUpdate({
+    userName,
+  }, {
+    hashed_password,
+  })
+}
+
 module.exports = {
   joiUserSchema,
+  joiUserPasswordSchema,
   decodeToken,
   createUser,
   getUser,
   verifyUser,
+  updatePassword,
   generateJwtTokenForUser,
   getUserByUserName,
 }

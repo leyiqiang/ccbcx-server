@@ -4,7 +4,7 @@ const express = require('express');
 const _ = require('lodash')
 const Joi = require('joi');
 const moment = require('moment')
-const router = express.Router();
+const router = express.Router()
 const {
   getAllGroups,
   findGroupByGroupName,
