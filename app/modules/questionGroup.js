@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const { questionGroupSchemaString } = require('../models/questionGroup');
 const Joi = require('joi');
-// const _ = require('lodash')
+const moment = require('moment')
 const { GROUP_ONE, GROUP_TWO, GROUP_THREE, GROUP_SMALLMETA, GROUP_META, GROUP_METAMETA } = require('../models/questionGroup')
 const QuestionGroup = mongoose.model(questionGroupSchemaString);
 
@@ -17,7 +17,7 @@ async function getQuestionGroupList() {
 }
 
 async function getQuestionGroupByDate() {
-  const now = new Date()
+  const now = moment.utc().toDate()
   return QuestionGroup.find({
     releaseTime: {$lt: now},
     groupType: {$lt: 4},

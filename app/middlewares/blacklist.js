@@ -11,13 +11,13 @@ const checkBlackList = async function(req, res, next) {
     })
     if (!_.isNil(blackList)) {
       const { blockedUntil } = blackList
-      if (moment(blockedUntil).isBefore(moment())) {
+      if (moment(blockedUntil).isBefore(moment().utc())) {
         await removeBlackList({
           groupName: member.groupName,
         })
         return next()
       } else {
-        const diff = moment.duration(moment(blockedUntil).diff(moment()))
+        const diff = moment.duration(moment(blockedUntil).diff(moment().utc()))
         const seconds = parseInt(diff.asSeconds())
         return res.status(403).send({message: '你还需要' + seconds + '秒才能回答问题'})
       }

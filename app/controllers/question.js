@@ -33,7 +33,6 @@ router.use(authorization.requiresLogin)
 router.get('/list', requiresTeam, async function(req, res) {
   try {
     const questionGroupList = await getQuestionGroupByDate()
-    console.log(questionGroupList)
     const groupTypes = _.map(questionGroupList, (g) => {
       return {groupType: g.groupType}
     })
@@ -90,7 +89,7 @@ router.post('/answer', requiresTeam, checkBlackList, requiresRelease, async func
         questionNumber,
         answer,
         score,
-        completeTime: new Date(),
+        completeTime: moment.utc().toDate(),
       })
       return res.status(200).send({message: '回答正确'})
     } else {
@@ -101,7 +100,7 @@ router.post('/answer', requiresTeam, checkBlackList, requiresRelease, async func
         completeTime: null,
       })
       // add to black list, block to 1 minute
-      const blockedUntil = moment().add(60, 'seconds').toDate()
+      const blockedUntil = moment().utc().add(60, 'seconds').toDate()
       await addBlackList({
         groupName: member.groupName,
         blockedUntil,

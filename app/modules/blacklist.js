@@ -2,6 +2,15 @@
 const mongoose = require('mongoose');
 const { blackListSchemaString } = require('../models/blacklist');
 const BlackList = mongoose.model(blackListSchemaString);
+const Joi = require('joi');
+// const _ = require('lodash')
+
+
+const joiBlackListSchema = Joi.object().keys({
+  groupName: Joi.string().min(1).max(30).required(),
+  seconds: Joi.number().min(0).required(),
+});
+
 
 async function getBlackList({ groupName }) {
   const blacklist =  await BlackList.findOne({
@@ -32,4 +41,5 @@ module.exports = {
   getBlackList,
   removeBlackList,
   addBlackList,
+  joiBlackListSchema,
 }

@@ -52,7 +52,6 @@ async function calculateScore ({groupType, releaseTime, questionNumber}) {
 const filterHint = ({question}) => {
   const { releaseTime } = question.questionGroup
   const diff = calculateTimeDiff({releaseTime})
-  console.log(diff)
   if(diff <= TIME_INTERVAL * 3) {
     delete question['hint3']
   }
@@ -66,7 +65,7 @@ const filterHint = ({question}) => {
 }
 
 const calculateTimeDiff = ({releaseTime}) => {
-  const duration = moment.duration(moment().diff(moment(releaseTime)))
+  const duration = moment.duration(moment().utc().diff(moment(releaseTime)))
   return duration.asSeconds()
 }
 

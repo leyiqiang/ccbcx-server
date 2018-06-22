@@ -18,7 +18,6 @@ const app = express();
  */
 
 module.exports = app;
-
 // Bootstrap models
 fs.readdirSync(models)
 .filter(file => ~file.search(/^[^].*\.js$/))
