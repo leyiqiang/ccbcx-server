@@ -26,9 +26,11 @@ const requiresRelease = async function(req, res, next) {
   if (_.isNil(questionNumber)) {
     questionNumber = req.body.questionNumber
   }
-  console.log(questionNumber)
   try {
     let question = await getQuestion({questionNumber})
+    if (_.isNil(question) || question.questionGroup.groupType >= 4 ) {
+      return res.status(404).send({message: 'Question does not exist.'})
+    }
     if (moment(question.questionGroup.releaseTime).isAfter(moment())) {
       return res.status(403).send({message: 'You are not allowed to do this.'})
     }

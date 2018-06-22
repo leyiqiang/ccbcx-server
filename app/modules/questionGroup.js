@@ -20,6 +20,7 @@ async function getQuestionGroupByDate() {
   const now = new Date()
   return QuestionGroup.find({
     releaseTime: {$lt: now},
+    groupType: {$lt: 4},
   })
 }
 

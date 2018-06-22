@@ -33,6 +33,7 @@ router.use(authorization.requiresLogin)
 router.get('/list', requiresTeam, async function(req, res) {
   try {
     const questionGroupList = await getQuestionGroupByDate()
+    console.log(questionGroupList)
     const groupTypes = _.map(questionGroupList, (g) => {
       return {groupType: g.groupType}
     })

@@ -32,12 +32,12 @@
   {questionNumber: 'M1', groupType: 4, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
   {questionNumber: 'M2', groupType: 4, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
   {questionNumber: 'M3', groupType: 4, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'MM-fake', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'MM', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
   {questionNumber: 'M4', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
   {questionNumber: 'M5', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
   {questionNumber: 'M6', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
   {questionNumber: 'M7', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
   {questionNumber: 'M8', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'MM-final', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''}
+  {questionNumber: 'MMM', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''}
 
 ]
