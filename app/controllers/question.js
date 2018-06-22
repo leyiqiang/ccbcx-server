@@ -24,7 +24,7 @@ AWS.config.update({
 const BUCKET_NAME = 'ccbcx-fake'
 const s3 = new AWS.S3()
 
-const { requiresTeam } = require('../middlewares/question')
+const { requiresTeam, requiresRelease } = require('../middlewares/question')
 const { checkBlackList } = require('../middlewares/blacklist')
 
 const authorization = require('../middlewares/auth')
@@ -46,7 +46,7 @@ router.get('/list', requiresTeam, async function(req, res) {
   }
 });
 
-router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
+router.post('/answer', requiresTeam, checkBlackList, requiresRelease, async function(req, res) {
   const member = req.member
   const fieldList = ['questionNumber', 'answer']
   const newProgressFormBody = _.pick(req.body, fieldList)
@@ -112,9 +112,10 @@ router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
   }
 })
 
-router.get('/:questionNumber', async function(req, res) {
+router.get('/:questionNumber', requiresRelease, async function(req, res) {
   try {
     const { questionNumber } = req.params
+    let question = await getQuestion({ questionNumber })
     const params =  {
       Bucket: BUCKET_NAME,
       Key: questionNumber + '.txt',
@@ -128,7 +129,6 @@ router.get('/:questionNumber', async function(req, res) {
         questionContent = ''
       }
     }
-    let question = await getQuestion({ questionNumber })
     question = question.toObject()
     delete question['answer']
     question.questionContent = questionContent
@@ -139,7 +139,7 @@ router.get('/:questionNumber', async function(req, res) {
   }
 })
 
-router.get('/progress/:questionNumber', requiresTeam, async function(req, res) {
+router.get('/progress/:questionNumber', requiresTeam, requiresRelease, async function(req, res) {
   try {
     const { questionNumber } = req.params
     const member = req.member
