@@ -71,11 +71,11 @@ router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
     // check progress
     if(!_.isNil(progress)) {
       if (_.includes(progress.answerHistory, answer)) {
-        return res.status(400).send({message: 'you already answered that'})
+        return res.status(400).send({message: '你已经回答过这个答案了'})
       }
       if (!_.isNil(progress.completeTime)) {
         return res.status(400).
-            send({message: 'you already completed the question'})
+            send({message: '你已经完成这个题目了'})
       }
     }
 
@@ -91,7 +91,7 @@ router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
         score,
         completeTime: new Date(),
       })
-      return res.status(200).send({message: 'correct answer'})
+      return res.status(200).send({message: '回答正确'})
     } else {
       await updateProgress({
         groupName: member.groupName,
@@ -105,7 +105,7 @@ router.post('/answer', requiresTeam, checkBlackList, async function(req, res) {
         groupName: member.groupName,
         blockedUntil,
       })
-      return res.status(200).send({message: 'wrong answer'})
+      return res.status(200).send({message: '回答错误'})
     }
   } catch(err) {
     return res.status(500).send({message: err.message})
