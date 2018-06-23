@@ -28,6 +28,18 @@ async function getProgressListByQuestion({questionNumber}) {
   return progressList
 }
 
+async function getProgressListByGroup({groupName}) {
+  const progressList = await Progress.find({
+    groupName,
+  })
+  return progressList
+}
+
+async function getProgressList() {
+  const progressList = await Progress.find({})
+  return progressList
+}
+
 async function updateProgress({groupName, questionNumber, answer, score, completeTime}) {
   return Progress.findOneAndUpdate({
     groupName,
@@ -51,4 +63,6 @@ module.exports = {
   joiProgressSchema,
   getProgress,
   getProgressListByQuestion,
+  getProgressListByGroup,
+  getProgressList,
 }

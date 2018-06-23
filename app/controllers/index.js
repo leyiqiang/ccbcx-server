@@ -43,5 +43,8 @@ module.exports = function (app) {
   const admin_question = require('./admin/question')
   apiRouter.use('/admin/question', admin_question)
 
+  const admin_data = require('./admin/data')
+  apiRouter.use('/admin/data', admin_data)
+
   apiRouter.use(authErrorHandler)
 }
