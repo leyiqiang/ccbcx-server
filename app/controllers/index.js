@@ -31,6 +31,9 @@ module.exports = function (app) {
   const group = require('./group')
   apiRouter.use('/group', group)
 
+  const news = require('./news')
+  apiRouter.use('/news', news)
+
   const admin_session = require('./admin/session')
   apiRouter.use('/admin/session', admin_session)
 
@@ -45,6 +48,9 @@ module.exports = function (app) {
 
   const admin_data = require('./admin/data')
   apiRouter.use('/admin/data', admin_data)
+
+  const admin_news = require('./admin/news')
+  apiRouter.use('/admin/news', admin_news)
 
   apiRouter.use(authErrorHandler)
 }
