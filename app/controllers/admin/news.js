@@ -3,7 +3,8 @@
 const express = require('express');
 const _ = require('lodash')
 const Joi = require('joi');
-const { sendJoiValidationError, addNews } = require('../../utils/joi');
+const { sendJoiValidationError } = require('../../utils/joi');
+const { addNews, getNews } = require('../../modules/news')
 // const moment = require('moment')
 const router = express.Router()
 const { joiNewsSchema } = require('../../models/news')
@@ -27,6 +28,15 @@ router.post('/create', async function(req, res) {
   try {
     await addNews({message})
     return res.sendStatus(200)
+  } catch(err) {
+    return res.status(500).send({message: err.message})
+  }
+})
+
+router.get('/list', async function(req, res) {
+  try {
+    const newsList = await getNews()
+    return res.status(200).send(newsList)
   } catch(err) {
     return res.status(500).send({message: err.message})
   }

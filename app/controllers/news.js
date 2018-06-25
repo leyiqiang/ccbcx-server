@@ -2,9 +2,9 @@
 
 const express = require('express');
 // const _ = require('lodash')
-const { getNews } = require('../utils/joi');
 // const moment = require('moment')
 const router = express.Router()
+const { getNews } = require('../modules/news')
 
 const authorization = require('../middlewares/auth')
 router.use(authorization.requiresLogin)
