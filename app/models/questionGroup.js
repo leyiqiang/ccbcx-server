@@ -5,9 +5,8 @@ const questionGroupSchemaString = 'QuestionGroup';
 const GROUP_ONE = 1
 const GROUP_TWO = 2
 const GROUP_THREE = 3
-const GROUP_SMALLMETA = 4
-const GROUP_META = 5
-const GROUP_METAMETA = 6
+const GROUP_META = 4
+const GROUP_METAMETA = 5
 
 const QuestionGroup = new Schema({
   groupType: {
@@ -37,7 +36,6 @@ module.exports = {
   GROUP_ONE,
   GROUP_TWO,
   GROUP_THREE,
-  GROUP_SMALLMETA,
   GROUP_META,
   GROUP_METAMETA,
   questionGroupSchemaString,

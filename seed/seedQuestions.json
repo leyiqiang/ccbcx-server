@@ -29,15 +29,15 @@
   {questionNumber: '28', groupType: 3, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
   {questionNumber: '29', groupType: 3, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
   {questionNumber: '30', groupType: 3, answer: '答案', isMeta: false, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M1', groupType: 4, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M2', groupType: 4, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M3', groupType: 4, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'MM', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M4', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M5', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M6', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M7', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'M8', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
-  {questionNumber: 'MMM', groupType: 6, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''}
+  {questionNumber: 'M1', groupType: 1, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'M2', groupType: 2, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'M3', groupType: 3, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'MM', groupType: 4, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'M4', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'M5', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'M6', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'M7', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'M8', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''},
+  {questionNumber: 'MMM', groupType: 5, answer: '答案', isMeta: true, hint1: '', hint2:'', hint3: ''}
 
 ]

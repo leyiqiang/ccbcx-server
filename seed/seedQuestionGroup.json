@@ -2,8 +2,6 @@
   {groupName: 'one', groupType: 1},
   {groupName: 'two', groupType: 2},
   {groupName: 'three', groupType: 3},
-  {groupName: 'small-meta', groupType: 4},
-  {groupName: 'fake-meta', groupType: 5},
-  {groupName: 'metameta', groupType: 6}
-
+  {groupName: 'fake-meta', groupType: 4},
+  {groupName: 'metameta', groupType: 5}
 ]
