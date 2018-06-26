@@ -17,7 +17,12 @@ async function addNews({ message }) {
 }
 
 async function getNews() {
-  const news = News.find({})
+  const news = News.find({}).sort({createdAt: -1})
+  return news
+}
+
+async function getLatestNews() {
+  const news = News.findOne({}).sort({createdAt: -1})
   return news
 }
 
@@ -30,4 +35,5 @@ module.exports = {
   addNews,
   getNews,
   deleteNews,
+  getLatestNews,
 }
