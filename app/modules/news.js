@@ -21,8 +21,13 @@ async function getNews() {
   return news
 }
 
+async function deleteNews({_id}) {
+  return News.findOneAndDelete({_id})
+}
+
 module.exports = {
   joiNewsSchema,
   addNews,
   getNews,
+  deleteNews,
 }

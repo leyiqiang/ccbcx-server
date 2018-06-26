@@ -12,7 +12,12 @@ const {
 
 const { addBlackList } = require('../modules/blacklist')
 const { getQuestionGroupByDate } = require('../modules/questionGroup')
-const {getProgress, updateProgress, joiProgressSchema} = require('../modules/progress')
+const {
+  getProgress,
+  updateProgress,
+  getCompletedProgressList,
+  joiProgressSchema,
+} = require('../modules/progress')
 const { sendJoiValidationError } = require('../utils/joi');
 const { calculateScore, filterHint } = require('../utils/question')
 
@@ -38,6 +43,10 @@ router.get('/list', async function(req, res) {
   try {
     const maxGroupType = await getMaxGroupType({member})
     const questionGroupList = await getQuestionGroupByDate({maxGroupType})
+    // todo send completed
+    await getCompletedProgressList({
+      groupName: member.groupName,
+    })
     const groupTypes = _.map(questionGroupList, (g) => {
       return {groupType: g.groupType}
     })
