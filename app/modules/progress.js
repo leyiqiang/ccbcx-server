@@ -56,6 +56,13 @@ async function updateProgress({groupName, questionNumber, answer, score, complet
   )
 }
 
+async function getCompletedProgressList({groupName}) {
+  return Progress.find({
+    groupName,
+    completeTime: {$ne: null},
+  })
+}
+
 
 
 module.exports = {
@@ -65,4 +72,5 @@ module.exports = {
   getProgressListByQuestion,
   getProgressListByGroup,
   getProgressList,
+  getCompletedProgressList,
 }

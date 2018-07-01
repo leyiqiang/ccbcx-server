@@ -9,13 +9,16 @@ const {
   getQuestionGroup,
 } = require('../modules/questionGroup')
 const {requiresTeam} = require('../middlewares/question')
-
+const { getMaxGroupType } = require('../utils/question')
 const authorization = require('../middlewares/auth')
 router.use(authorization.requiresLogin)
 
 router.get('/list', requiresTeam, async function (req, res) {
+  const member = req.member
   try {
-    const questionGroupList = await getQuestionGroupByDate()
+    const maxGroupType = await getMaxGroupType({member})
+    const questionGroupList = await getQuestionGroupByDate({maxGroupType})
+
     const sortedList = _.sortBy(questionGroupList, ['groupType'])
     let lastGroupType
     if (sortedList.length !== 0) {

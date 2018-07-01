@@ -1,7 +1,9 @@
 const moment = require('moment')
 
 const TIME_INTERVAL = 300
-const {getProgressListByQuestion} = require('../modules/progress')
+const {getProgressListByQuestion, getProgress} = require('../modules/progress')
+const { GROUP_METAMETA, GROUP_META } = require('../models/questionGroup')
+const _ = require('lodash')
 
 async function calculateScore ({groupType, releaseTime, questionNumber}) {
   const diff = calculateTimeDiff({releaseTime})
@@ -69,7 +71,20 @@ const calculateTimeDiff = ({releaseTime}) => {
   return duration.asSeconds()
 }
 
+const getMaxGroupType = async function({member}) {
+  const fakeMetaProgress = await getProgress({
+    groupName: member.groupName,
+    questionNumber: 'MM',
+  })
+  if(!_.isNil(fakeMetaProgress) && !_.isNil(fakeMetaProgress.completeTime)) {
+    return GROUP_METAMETA
+  } else {
+    return GROUP_META
+  }
+}
+
 module.exports = {
   calculateScore,
   filterHint,
+  getMaxGroupType,
 }

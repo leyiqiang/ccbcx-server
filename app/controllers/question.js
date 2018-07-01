@@ -9,9 +9,15 @@ const {
   getQuestionsByGroupTypes,
   getQuestion,
 } = require('../modules/question')
+
 const { addBlackList } = require('../modules/blacklist')
 const { getQuestionGroupByDate } = require('../modules/questionGroup')
-const {getProgress, updateProgress, joiProgressSchema} = require('../modules/progress')
+const {
+  getProgress,
+  updateProgress,
+  getCompletedProgressList,
+  joiProgressSchema,
+} = require('../modules/progress')
 const { sendJoiValidationError } = require('../utils/joi');
 const { calculateScore, filterHint } = require('../utils/question')
 
@@ -26,13 +32,21 @@ const s3 = new AWS.S3()
 
 const { requiresTeam, requiresRelease } = require('../middlewares/question')
 const { checkBlackList } = require('../middlewares/blacklist')
-
+const { getMaxGroupType } = require('../utils/question')
 const authorization = require('../middlewares/auth')
-router.use(authorization.requiresLogin)
 
-router.get('/list', requiresTeam, async function(req, res) {
+router.use(authorization.requiresLogin)
+router.use(requiresTeam)
+
+router.get('/list', async function(req, res) {
+  const member = req.member
   try {
-    const questionGroupList = await getQuestionGroupByDate()
+    const maxGroupType = await getMaxGroupType({member})
+    const questionGroupList = await getQuestionGroupByDate({maxGroupType})
+    // todo send completed
+    await getCompletedProgressList({
+      groupName: member.groupName,
+    })
     const groupTypes = _.map(questionGroupList, (g) => {
       return {groupType: g.groupType}
     })
@@ -46,7 +60,7 @@ router.get('/list', requiresTeam, async function(req, res) {
   }
 });
 
-router.post('/answer', requiresTeam, checkBlackList, requiresRelease, async function(req, res) {
+router.post('/answer', checkBlackList, requiresRelease, async function(req, res) {
   const member = req.member
   const fieldList = ['questionNumber', 'answer']
   const newProgressFormBody = _.pick(req.body, fieldList)
@@ -139,7 +153,7 @@ router.get('/:questionNumber', requiresRelease, async function(req, res) {
   }
 })
 
-router.get('/progress/:questionNumber', requiresTeam, requiresRelease, async function(req, res) {
+router.get('/progress/:questionNumber', requiresRelease, async function(req, res) {
   try {
     const { questionNumber } = req.params
     const member = req.member
