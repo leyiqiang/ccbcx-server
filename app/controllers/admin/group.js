@@ -36,6 +36,7 @@ router.get('/list', async function (req, res) {
 
 router.get('/info/:groupName', async function(req, res) {
   const { groupName } = req.params
+  console.log(groupName +'asd')
   try {
     let memberList
     const group = await findGroupByGroupName({ groupName })

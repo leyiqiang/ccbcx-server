@@ -87,7 +87,8 @@ router.post('/create', async function(req, res) {
   if (!_.isNil(joiError)) {
     return sendJoiValidationError(joiError, res)
   }
-
+  // trim groupName
+  reqBody.groupName = reqBody.groupName.trim()
   try {
     const { groupName } = reqBody
     // validation

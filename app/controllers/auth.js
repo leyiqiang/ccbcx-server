@@ -42,6 +42,7 @@ router.post('/signUp', async function (req, res) {
   if (!_.isNil(joiError)) {
     return sendJoiValidationError(joiError, res)
   }
+  newUserFormBody.userName = newUserFormBody.userName.trim()
   try {
     const user = await userModule.getUser({ userName: newUserFormBody.userName })
     if (!_.isNil(user)) {
