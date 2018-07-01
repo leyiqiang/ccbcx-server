@@ -15,6 +15,9 @@ module.exports = function (app) {
   const auth = require('./auth')
   apiRouter.use('/auth', auth)
 
+  const admin_auth = require('./admin/auth')
+  apiRouter.user('/admin/auth', admin_auth)
+
   // Private routes
   const session = require('./session')
   apiRouter.use('/session', session)
