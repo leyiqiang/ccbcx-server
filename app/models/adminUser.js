@@ -8,7 +8,6 @@ const crypto = require('crypto');
 
 const AdminUserSchema = new Schema({
   userName: { type: String, default: '' },
-  nickName: { type: String, default: '' },
   hashed_password: { type: String, default: '' },
   salt: { type: String, default: '' },
 });
