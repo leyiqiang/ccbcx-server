@@ -22,8 +22,8 @@ const {
   getGroupMemberList,
 } = require('../../modules/member')
 
-const authorization = require('../../middlewares/auth')
-router.use(authorization.checkAdminJwt)
+const {requiresAdminCredential} = require('../../middlewares/auth')
+router.use(requiresAdminCredential)
 
 router.get('/list', async function (req, res) {
   try {

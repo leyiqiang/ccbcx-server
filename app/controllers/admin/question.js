@@ -24,9 +24,8 @@ AWS.config.update({
 const BUCKET_NAME = 'ccbcx'
 const s3 = new AWS.S3()
 
-const authorization = require('../../middlewares/auth')
-
-router.use(authorization.checkAdminJwt)
+const {requiresAdminCredential} = require('../../middlewares/auth')
+router.use(requiresAdminCredential)
 
 router.get('/list',async function(req, res) {
   try {

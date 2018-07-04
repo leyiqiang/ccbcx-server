@@ -8,8 +8,8 @@ const { addNews, getNews, joiNewsSchema, deleteNews } = require('../../modules/n
 // const moment = require('moment')
 const router = express.Router()
 
-const authorization = require('../../middlewares/auth')
-router.use(authorization.checkAdminJwt)
+const {requiresAdminCredential} = require('../../middlewares/auth')
+router.use(requiresAdminCredential)
 
 router.post('/create', async function(req, res) {
   const fieldList = ['message']

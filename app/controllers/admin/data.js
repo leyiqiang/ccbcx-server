@@ -9,9 +9,9 @@ const {
 } = require('../../modules/progress')
 const router = express.Router();
 
-const authorization = require('../../middlewares/auth')
+const {requiresAdminCredential} = require('../../middlewares/auth')
+router.use(requiresAdminCredential)
 
-router.use(authorization.checkAdminJwt)
 router.get('/group/:groupName', async function(req, res) {
   const { groupName } = req.params
   try {
