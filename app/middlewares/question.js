@@ -29,23 +29,23 @@ const requiresRelease = async function(req, res, next) {
   }
   try {
     const member = req.member
-    // check quesiton release
+    // check question release
     const fakeMetaProgress = await getProgress({
       groupName: member.groupName,
       questionNumber: 'MM',
     })
     let question = await getQuestion({questionNumber})
     if (_.isNil(question)) {
-      return res.status(404).send({message: 'Question does not exist.'})
+      return res.status(404).send({message: '该题目不存在.'})
     }
+    // 如果MM没有解出来, 不显示之后的题目
     if(question.questionGroup.groupType >= 5) {
-      console.log(fakeMetaProgress)
       if(_.isNil(fakeMetaProgress) || _.isNil(fakeMetaProgress.completeTime)) {
-        return res.status(404).send({message: 'Question does not exist.'})
+        return res.status(404).send({message: '该题目不存在.'})
       }
     }
     if (moment(question.questionGroup.releaseTime).isAfter(moment().utc())) {
-      return res.status(403).send({message: 'You are not allowed to do this.'})
+      return res.status(403).send({message: '缺少权限.'})
     }
     return next()
   } catch(err) {
