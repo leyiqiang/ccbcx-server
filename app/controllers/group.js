@@ -1,5 +1,5 @@
 'use strict'
-
+// todo list: 关闭退出/加入队伍, 显示进程(地图上绿色数字)
 const express = require('express')
 const router = express.Router();
 const _ = require('lodash')
